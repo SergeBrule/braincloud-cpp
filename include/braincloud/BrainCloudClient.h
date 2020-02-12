@@ -21,6 +21,7 @@
 #include "braincloud/IRTTConnectCallback.h"
 
 #include "braincloud/internal/IBrainCloudComms.h"
+#include "braincloud/internal/RelayComms.h"
 #include "braincloud/internal/RTTComms.h"
 #include "braincloud/BrainCloudTypes.h"
 #include "braincloud/BrainCloudPlayerStatistics.h"
@@ -58,6 +59,7 @@
 #include "braincloud/BrainCloudFile.h"
 #include "braincloud/BrainCloudGroup.h"
 #include "braincloud/BrainCloudMail.h"
+#include "braincloud/BrainCloudRelay.h"
 #include "braincloud/BrainCloudRTT.h"
 #include "braincloud/BrainCloudChat.h"
 #include "braincloud/BrainCloudLobby.h"
@@ -70,6 +72,15 @@ namespace Json {
 
 namespace BrainCloud
 {
+    enum class eBrainCloudUpdateType
+    {
+        ALL,
+        REST,   // REST Api calls
+        RTT,    // Real-time tech
+        RS,     // Relay server
+        PING    // Lobby Pings
+    };
+
 	/**
 	 * This class is responsible for accumulating client requests, bundling
 	 * them together and sending them off to the server...
@@ -176,11 +187,17 @@ namespace BrainCloud
 		 * Not meant to be called by external clients, just for internal testing and use.
 		 */
 		RTTComms * getRTTComms() const { return _rttComms; }
+		
+		/**
+		 * Return a reference to the client's relay comms.
+		 * Not meant to be called by external clients, just for internal testing and use.
+		 */
+        RelayComms* getRelayComms() const { return _relayComms; }
 
 		/**
 		 * Run callbacks, to be called once per frame from your main thread
 		 */
-		void runCallbacks();
+		void runCallbacks(eBrainCloudUpdateType updateType = eBrainCloudUpdateType::ALL);
 
 		/**
 		 * Sets a callback handler for any out of band event messages that come from
@@ -362,6 +379,7 @@ namespace BrainCloud
 		BrainCloudGroup * getGroupService() { return _groupService; }
 		BrainCloudMail * getMailService() { return _mailService; }
 		BrainCloudRTT * getRTTService() { return _rttService; }
+        BrainCloudRelay* getRelayService() { return _relayService; }
 		BrainCloudChat * getChatService() { return _chatService; }
 		BrainCloudLobby * getLobbyService() { return _lobbyService; }
 		BrainCloudMessaging * getMessagingService() { return _messagingService; }
@@ -614,6 +632,7 @@ namespace BrainCloud
 		static BrainCloudClient * _instance;
 
 		IBrainCloudComms * _brainCloudComms;
+        RelayComms* _relayComms;
 		RTTComms * _rttComms;
 		BrainCloudPlayerStatistics * _playerStatisticsService;
 		BrainCloudGlobalStatistics * _globalStatisticsService;
@@ -650,6 +669,7 @@ namespace BrainCloud
 		BrainCloudFile * _fileService;
 		BrainCloudGroup * _groupService;
 		BrainCloudMail * _mailService;
+		BrainCloudRelay * _relayService;
 		BrainCloudRTT * _rttService;
 		BrainCloudChat * _chatService;
 		BrainCloudLobby * _lobbyService;
