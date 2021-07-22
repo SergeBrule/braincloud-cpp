@@ -61,7 +61,7 @@ TEST_F(TestBCMessaging, GetMessagesPageOffset)
 	TestResult tr;
 
 	m_bc->getMessagingService()->getMessagesPageOffset("invalidContext", 1, &tr);
-	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, DECODE_CONTEXT);
+	tr.run(m_bc, HTTP_BAD_REQUEST);
 }
 
 TEST_F(TestBCMessaging, SendMessage)

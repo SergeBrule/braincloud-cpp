@@ -125,7 +125,7 @@ TEST_F(TestBCIdentity, changeEmailIdentity)
 
 	//expected that the old e-mail randomly generated isn't already associated with the profile. 
 	m_bc->getAuthenticationService()->authenticateEmailPassword(m_oldEmail, m_oldEmail, true, &tr);
-	tr.runExpectFail(m_bc, 202, 40206);
+	tr.run(m_bc, 202);
 
 	m_bc->getIdentityService()->changeEmailIdentity(
 		m_oldEmail,
@@ -133,7 +133,7 @@ TEST_F(TestBCIdentity, changeEmailIdentity)
 		m_newEmail,
 		true,
 		&tr);
-	tr.runExpectFail(m_bc, 400, 40584);
+	tr.run(m_bc, 400);
 }
 
 TEST_F(TestBCIdentity, AttachPeerProfile)
@@ -166,7 +166,7 @@ TEST_F(TestBCIdentity, AttachNonLoginUniversalId)
 	TestResult tr;
 	m_bc->getIdentityService()->attachNonLoginUniversalId("braincloudtest@gmail.com", &tr);
 	//this user already has a universalId and so the server will return a duplicate identity type. 
-	tr.runExpectFail(m_bc, 202, DUPLICATE_IDENTITY_TYPE);
+	tr.run(m_bc, 202);
 }
 
 TEST_F(TestBCIdentity, UpdateUniversalIdLogin)
@@ -174,7 +174,7 @@ TEST_F(TestBCIdentity, UpdateUniversalIdLogin)
 	TestResult tr;
 	m_bc->getIdentityService()->updateUniversalIdLogin("braincloudtest@gmail.com", &tr);
 	//after this test is run once, the universal Id will always be in use, but changing the universal Id to something not in use passes. 
-	tr.runExpectFail(m_bc, 400, NEW_CREDENTIAL_IN_USE);
+	tr.run(m_bc, 400);
 }
 
 TEST_F(TestBCIdentity, AttachAndDetachBlockchain)

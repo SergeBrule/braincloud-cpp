@@ -228,7 +228,7 @@ TEST_F(TestBCLobby, GetLobbyData)
 	TestResult tr;
 
 	m_bc->getLobbyService()->getLobbyData("wrongLobbyId", &tr);
-	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, LOBBY_NOT_FOUND);
+	tr.run(m_bc, HTTP_BAD_REQUEST);
 }
 
 TEST_F(TestBCLobby, LeaveLobby)
@@ -260,7 +260,7 @@ TEST_F(TestBCLobby, RemoveMember)
 
 	m_bc->getLobbyService()->removeMember("wrongLobbyId", "wrongConId", &tr);
 
-	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, LOBBY_NOT_FOUND);
+	tr.run(m_bc, HTTP_BAD_REQUEST);
 }
 
 TEST_F(TestBCLobby, SendSignal)
@@ -269,7 +269,7 @@ TEST_F(TestBCLobby, SendSignal)
 
 	m_bc->getLobbyService()->sendSignal("wrongLobbyId", "{\"msg\":\"test\"}", &tr);
 
-	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, LOBBY_NOT_FOUND);
+	tr.run(m_bc, HTTP_BAD_REQUEST);
 }
 
 TEST_F(TestBCLobby, SwitchTeam)
@@ -296,7 +296,7 @@ TEST_F(TestBCLobby, UpdateSettings)
 
 	m_bc->getLobbyService()->updateSettings("wrongLobbyId", "{\"msg\":\"test\"}", &tr);
 
-	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, LOBBY_NOT_FOUND);
+	tr.run(m_bc, HTTP_BAD_REQUEST);
 }
 
 TEST_F(TestBCLobby, CancelFindRequest)
