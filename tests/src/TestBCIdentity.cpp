@@ -133,7 +133,8 @@ TEST_F(TestBCIdentity, changeEmailIdentity)
 		m_newEmail,
 		true,
 		&tr);
-	tr.runExpectFail(m_bc, 400, 40584);
+	// tr.runExpectFail(m_bc, 400, 40584);
+	tr.run(m_bc, 400);
 }
 
 TEST_F(TestBCIdentity, AttachPeerProfile)

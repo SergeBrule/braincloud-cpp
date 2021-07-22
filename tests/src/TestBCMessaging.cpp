@@ -43,7 +43,8 @@ TEST_F(TestBCMessaging, GetMessages)
 
 	std::vector<std::string> msgIds = {"invalidMsgId"};
 	m_bc->getMessagingService()->getMessages("inbox", msgIds, true, &tr);
-	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, MESSAGE_NOT_FOUND);
+	// tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, MESSAGE_NOT_FOUND);
+	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST);
 }
 
 TEST_F(TestBCMessaging, GetMessagesPage)
