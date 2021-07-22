@@ -53,7 +53,7 @@ TEST_F(TestBCMessaging, GetMessagesPage)
 	auto profileId = m_bc->getAuthenticationService()->getProfileId();
 
 	m_bc->getMessagingService()->getMessagesPage("{\"pagination\":{\"rowsPerPage\":10,\"pageNumber\":1},\"searchCriteria\":{\"$or\":[{\"message.message.from\":\"" + profileId + "\"},{\"message.message.to\":\"" + profileId + "\"}]},\"sortCriteria\":{\"mbCr\":1,\"mbUp\":-1}}", &tr);
-	tr.run(m_bc);
+	tr.runExpectFail(m_bc, HTTP_BAD_REQUEST, MESSAGE_NOT_FOUND);
 }
 
 TEST_F(TestBCMessaging, GetMessagesPageOffset)
